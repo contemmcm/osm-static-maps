@@ -79,10 +79,20 @@
                 {{/if}}
                 var geojsonlayer = L.geoJson({{{ geojson }}}, {
                     pointToLayer: function (feature, latlng) {
+                        var marker;
+                        
                         if (feature.markerIconOptions) {
-                            return L.marker(latlng, {icon: L.icon(feature.markerIconOptions)})
+                            marker = L.marker(latlng, {icon: L.icon(feature.markerIconOptions)})
+                        } else {
+                            marker = L.marker(latlng, {icon: myIcon});
                         }
-                        return L.marker(latlng, {icon: myIcon});
+                        if (feature.properties && feature.properties.hasOwnProperty('marker-title')) {
+                            marker.bindTooltip(feature.properties['marker-title'], {
+                                permanent: true, 
+                                direction: 'right'
+                            });
+                        }
+                        return marker;
                     },
                     onEachFeature: function (feature, layer) {
                         {{#if arrows}}
