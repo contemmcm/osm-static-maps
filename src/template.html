@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html style="height:100%;width:100%;margin:0;padding:0">
     <head>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
         <style>
         //leafletcss//
         .leaflet-fade-anim, .leaflet-zoom-anim {
@@ -82,15 +85,23 @@
                         var marker;
                         
                         if (feature.markerIconOptions) {
-                            marker = L.marker(latlng, {icon: L.icon(feature.markerIconOptions)})
+                            if (feature.markerIconOptions.html) {
+                                marker = L.marker(latlng, {icon: L.divIcon(feature.markerIconOptions)})
+                            }
+                            else {
+                                marker = L.marker(latlng, {icon: L.icon(feature.markerIconOptions)})
+                            }
                         } else {
                             marker = L.marker(latlng, {icon: myIcon});
                         }
                         if (feature.properties && feature.properties.hasOwnProperty('marker-title')) {
-                            marker.bindTooltip(feature.properties['marker-title'], {
-                                permanent: true, 
-                                direction: 'right'
-                            });
+                            var options = {permanent: true, direction: 'right'}
+
+                            if (feature.properties.hasOwnProperty('marker-title-offset')) {
+                                options['offset'] = L.point(feature.properties['marker-title-offset'])
+                            }
+
+                            marker.bindTooltip(feature.properties['marker-title'], options);
                         }
                         return marker;
                     },

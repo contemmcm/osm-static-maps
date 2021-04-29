@@ -1,0 +1,17 @@
+{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-45.86976434369832, -23.20027967058309]
+    },
+    "properties": {
+      "marker-title": "My Title",
+      "marker-title-offset": {"x": 15, "y": 0}
+    },
+    "markerIconOptions": {
+        "html": "<i class='fa fa-exclamation-circle fa-3x' style='color: #DC143C;'></i>",
+        "iconSize": [31, 36],
+        "popupAnchor": [15, 15],
+        "className": "myDivIcon"
+    }
+}
